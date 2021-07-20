@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Models;
 
@@ -8,40 +10,40 @@ namespace Shop.Controllers
     {
         [HttpGet]
         [Route("")]
-        public string Get()
+        public async Task<ActionResult<List<Category>>> Get()
         {
-            return "get";
+            return new List<Category>();
         }
 
         [HttpGet]
         [Route("{id:int}")] // : introduz restrição na rota
-        public string Get(int id)
+        public async Task<ActionResult<Category>> Get(int id)
         {
-            return "get " + id;
+            return new Category();
         }
 
         [HttpPost]
         [Route("")]
-        public Category Post([FromBody] Category model)
+        public async Task<ActionResult<Category>> Post([FromBody] Category model)
         {
-            return model;
+            return CreatedAtAction(nameof(Get), new { id = model.Id}, model);
         }
 
         [HttpPut]
         [Route("{id:int}")]
-        public Category Put(int id, Category model)
+        public async Task<ActionResult<Category>> Put(int id, [FromBody] Category model)
         {
             if(model.Id == id)
-                return model;
+                return Ok(model);
 
-            return null;
+            return NotFound();
         }
 
         [HttpDelete]
-        [Route("")]
-        public string Delete(int id)
+        [Route("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
         {
-            return "delete";
+            return Ok();
         }
         
     }
