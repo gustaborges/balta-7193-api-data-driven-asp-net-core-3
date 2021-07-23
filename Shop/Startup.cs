@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Shop.Data;
 
 namespace Shop
 {
@@ -28,6 +30,13 @@ namespace Shop
         {
 
             services.AddControllers();
+            services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("ShopDatabase"));
+            services.AddScoped<DataContext, DataContext>();
+
+            // AddTransient: É criada uma nova instância toda  vez que a depêndencia tiver de ser resolvida
+            // AddScoped: É criada uma nova instância a cada requisição para a API. (Um Singleton cujo escopo é a requisição)
+            // AddSingleton: É criada a instância uma única vez e utilizada toda  vez que a depêndencia tiver de ser resolvida
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shop", Version = "v1" });
