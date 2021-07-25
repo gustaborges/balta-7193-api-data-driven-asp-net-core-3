@@ -6,7 +6,8 @@ namespace Shop.Data
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
-        { }
+        {
+        }
 
         /*DbContext é a representação do banco em memória*/
         /*DbSet é a representação das tabelas no banco*/

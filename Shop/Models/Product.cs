@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shop.Models
 {
@@ -22,7 +23,7 @@ namespace Shop.Models
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
         [Range(1, int.MaxValue, ErrorMessage = "Categoria inválida")]
-        public decimal CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public Category Category { get; set; }
 
 
